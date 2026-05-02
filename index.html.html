@@ -45,6 +45,9 @@
         .score-table th, .score-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
         .score-table th { background: #f8fafc; color: var(--teacher-color); }
         
+        /* Khu vực bảo mật link Sheets */
+        .secure-link-box { background: #f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--teacher-color); }
+        
         /* Khu vực JSON */
         #json-input { width: 100%; height: 300px; font-family: monospace; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 15px;}
 
@@ -120,16 +123,22 @@
 
         <!-- Tab 1: Quản lý điểm -->
         <div id="tab-quanly" class="tab-content active">
-            <h3 style="color: var(--teacher-color);">Thống kê kết quả</h3>
-            <p>Dữ liệu bên dưới là dữ liệu mô phỏng. Để xem dữ liệu thật của học sinh theo thời gian thực, vui lòng truy cập Google Sheets.</p>
-            <!-- LƯU Ý: Dán Link Google Sheets của bạn vào href bên dưới -->
-            <a href="https://docs.google.com/spreadsheets/d/..." target="_blank" style="display:inline-block; background:#16a34a; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold;">Mở Google Sheets (Dữ liệu thật)</a>
+            <h3 style="color: var(--teacher-color);">Truy cập hệ thống điểm</h3>
             
+            <div class="secure-link-box">
+                <p style="margin-top:0;">Để xem dữ liệu thật của học sinh theo thời gian thực trên Google Sheets, vui lòng xác nhận mã bảo mật phụ:</p>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input type="password" id="sheet-pwd" placeholder="Nhập mã mở Sheet (280319)..." style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 250px;">
+                    <button class="btn-action" style="background-color: #16a34a;" onclick="openScoreSheet()">Mở Trang Tính Báo Cáo</button>
+                </div>
+                <p id="sheet-pwd-error" style="color: red; display: none; margin-top:10px; font-weight: bold;">Mã bảo mật không đúng!</p>
+            </div>
+
+            <p><i>*Dữ liệu demo xem trước (Không phải dữ liệu thật):</i></p>
             <table class="score-table">
                 <tr><th>Họ Tên</th><th>Lớp</th><th>Điểm</th><th>Số câu sai</th><th>Lần thi</th><th>Thời gian nộp</th></tr>
                 <tr><td>Nguyễn Văn A</td><td>11A1</td><td>8.5</td><td>2 câu (Xác suất)</td><td>1</td><td>Hôm nay, 10:15</td></tr>
                 <tr><td>Trần Thị B</td><td>11A2</td><td>10.0</td><td>Không sai</td><td>1</td><td>Hôm nay, 10:30</td></tr>
-                <tr><td>Lê Hoàng C</td><td>11A1</td><td>4.2</td><td>7 câu (Hình học)</td><td>2</td><td>Hôm nay, 11:00</td></tr>
             </table>
         </div>
 
@@ -188,7 +197,6 @@
     <script>
         // ==========================================
         // DỮ LIỆU ĐỀ THI MẶC ĐỊNH (JSON)
-        // GIÁO VIÊN THAY ĐỔI ĐOẠN NÀY ĐỂ ĐỔI ĐỀ CHÍNH THỨC
         // ==========================================
         const DE_THI_MAC_DINH = {
             "title": "Đề Ôn Tập Số 1",
@@ -259,7 +267,6 @@
             if (document.getElementById('teacher-pwd').value === '081199') {
                 showScreen('teacher-dashboard');
                 document.getElementById('teacher-pwd').value = '';
-                // Nạp sẵn JSON mặc định vào khung cho GV dễ sửa
                 document.getElementById('json-input').value = JSON.stringify(DE_THI_MAC_DINH, null, 4);
             } else {
                 document.getElementById('pwd-error').style.display = 'block';
@@ -273,39 +280,48 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // --- HÀM KIỂM TRA MẬT KHẨU MỞ GOOGLE SHEETS ---
+        function openScoreSheet() {
+            const pwd = document.getElementById('sheet-pwd').value;
+            if (pwd === '280319') {
+                document.getElementById('sheet-pwd-error').style.display = 'none';
+                document.getElementById('sheet-pwd').value = ''; // Xóa trắng ô pass
+                // Chuyển hướng sang Google Sheets ở tab mới
+                window.open('https://docs.google.com/spreadsheets/d/1p0rvrU5dQl48hLB14Iq8oWNJZ2y6j1nOo8hRJ9uWNsM/edit?gid=0#gid=0', '_blank');
+            } else {
+                document.getElementById('sheet-pwd-error').style.display = 'block';
+            }
+        }
+
         function previewExamFromJSON() {
             try {
                 const jsonText = document.getElementById('json-input').value;
                 const examData = JSON.parse(jsonText);
                 buildExamHTML(examData);
-                // Bỏ qua đăng nhập học sinh, vào thẳng exam screen để preview
                 studentName = "Giáo Viên (Preview)";
                 studentClass = "Admin";
                 document.getElementById('display-name').textContent = studentName;
                 document.getElementById('display-class').textContent = studentClass;
                 showScreen('exam-screen');
             } catch (e) {
-                alert("Mã JSON không hợp lệ! Vui lòng kiểm tra lại dấu phẩy, ngoặc kép... Chi tiết lỗi: " + e.message);
+                alert("Mã JSON không hợp lệ! Vui lòng kiểm tra lại. Lỗi: " + e.message);
             }
         }
 
         // --- LOGIC XÂY DỰNG ĐỀ TỪ JSON (RENDER ĐỘNG) ---
         function buildExamHTML(examData) {
-            // Cập nhật thông tin cơ bản
             document.getElementById('home-exam-title').textContent = examData.title;
             document.getElementById('home-exam-time').textContent = examData.time;
             document.getElementById('header-exam-title').textContent = examData.title;
             currentExamTime = examData.time;
             timeRemaining = currentExamTime * 60;
             
-            // Reset đáp án
             correctAnswers = {};
             questionTags = {};
             
             let html = "";
             let qIndex = 1;
 
-            // Xây dựng Phần 1
             if (examData.part1 && examData.part1.length > 0) {
                 html += `<h3 class="section-title">Phần 1: Trắc nghiệm nhiều phương án lựa chọn</h3>`;
                 examData.part1.forEach(q => {
@@ -324,7 +340,6 @@
                 });
             }
 
-            // Xây dựng Phần 2
             if (examData.part2 && examData.part2.length > 0) {
                 qIndex = 1;
                 html += `<h3 class="section-title">Phần 2: Trắc nghiệm đúng sai</h3>`;
@@ -348,7 +363,6 @@
                 });
             }
 
-            // Xây dựng Phần 3
             if (examData.part3 && examData.part3.length > 0) {
                 qIndex = 1;
                 html += `<h3 class="section-title">Phần 3: Trả lời ngắn</h3>`;
@@ -365,11 +379,7 @@
             }
 
             document.getElementById('exam-content-area').innerHTML = html;
-            
-            // Yêu cầu MathJax render lại công thức Toán
-            if (window.MathJax) {
-                MathJax.typesetPromise();
-            }
+            if (window.MathJax) MathJax.typesetPromise();
         }
 
         // --- LOGIC HỌC SINH THI ---
@@ -435,12 +445,10 @@
             if(dsCauSai === "") dsCauSai = "Không sai";
             let diemHe10 = ((score / maxScore) * 10).toFixed(1);
 
-            // Bỏ qua lưu điểm nếu đang ở chế độ Preview (Giáo viên Test)
             if (studentClass === "Admin") {
                 btn.textContent = "CHẾ ĐỘ XEM TRƯỚC (KHÔNG LƯU ĐIỂM)";
             } else {
                 btn.textContent = "ĐANG LƯU ĐIỂM VỀ HỆ THỐNG...";
-                // BẠN DÁN LINK APPS SCRIPT VÀO ĐÂY NHÉ
                 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyqxP-qIq-fp2Ux24Ou_lsCwgkJQkGzZJ99LVVM6g4FIT0c1gSz6u-OhkFKk1GRN5IxQ/exec";
                 fetch(APPS_SCRIPT_URL, {
                     method: "POST",
@@ -467,7 +475,7 @@
             setTimeout(() => document.getElementById("results-section").scrollIntoView({ behavior: "smooth" }), 500);
         }
 
-        // Tự động Load đề thi mặc định khi mở trang
+        // Tự động Load đề
         window.onload = function() {
             buildExamHTML(DE_THI_MAC_DINH);
         };
