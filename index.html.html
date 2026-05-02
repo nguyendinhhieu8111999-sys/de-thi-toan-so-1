@@ -15,75 +15,42 @@
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* --- MÀN HÌNH CHỌN CỔNG --- */
-        #portal-selection {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-        }
-        .portal-box {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        .portal-box h1 { color: #3730a3; margin-bottom: 30px; }
-        .btn-portal {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-        .btn-portal:hover { transform: translateY(-2px); opacity: 0.9; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: #333; line-height: 1.6; margin: 0; padding: 0; }
+        
+        /* CÁC NÚT ĐIỀU HƯỚNG CƠ BẢN */
+        .back-btn { background: #e2e8f0; color: #333; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-weight:bold; }
+        .btn-action { background-color: var(--teacher-color); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        /* MÀN HÌNH CHỌN CỔNG */
+        #portal-selection { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
+        .portal-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 500px; width: 90%; }
+        .btn-portal { display: block; width: 100%; padding: 15px; margin-bottom: 20px; font-size: 1.2rem; font-weight: bold; color: white; border: none; border-radius: 8px; cursor: pointer; }
         .btn-student { background-color: var(--primary-color); }
         .btn-teacher { background-color: var(--teacher-color); }
 
-        /* --- KHU VỰC GIÁO VIÊN --- */
-        #teacher-login, #teacher-dashboard {
-            display: none;
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .teacher-header { color: var(--teacher-color); border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 30px; }
-        .login-form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; max-width: 400px; margin: 0 auto; }
+        /* KHU VỰC GIÁO VIÊN */
+        #teacher-login, #teacher-dashboard { display: none; padding: 40px 20px; max-width: 900px; margin: 0 auto; }
+        .login-form { background: white; padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
         .login-form input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        .btn-action { background-color: var(--teacher-color); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         
-        .upload-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border: 2px dashed #a78bfa; }
-        .file-input { margin: 20px 0; }
-        #ai-loader { display: none; margin-top: 20px; color: var(--teacher-color); font-weight: bold; }
-        .loader-spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(124, 58, 237, 0.3); border-radius: 50%; border-top-color: var(--teacher-color); animation: spin 1s ease-in-out infinite; vertical-align: middle; margin-right: 10px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Tabs Giáo viên */
+        .teacher-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
+        .tab-btn { background: none; border: none; padding: 10px 20px; font-size: 1.1rem; cursor: pointer; color: #64748b; font-weight: bold; }
+        .tab-btn.active { color: var(--teacher-color); border-bottom: 3px solid var(--teacher-color); }
+        .tab-content { display: none; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tab-content.active { display: block; }
         
-        .mock-result { display: none; margin-top: 20px; text-align: left; background: #f5f3ff; padding: 15px; border-radius: 5px; border-left: 4px solid var(--teacher-color); font-size: 0.9rem;}
+        /* Table Quản lý điểm */
+        .score-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .score-table th, .score-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+        .score-table th { background: #f8fafc; color: var(--teacher-color); }
+        
+        /* Khu vực JSON */
+        #json-input { width: 100%; height: 300px; font-family: monospace; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 15px;}
 
-        /* --- MÀN HÌNH HỌC SINH (GIỮ NGUYÊN CSS CŨ) --- */
+        /* MÀN HÌNH HỌC SINH */
         #start-screen { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #eff6ff 0%, #bfdbfe 100%); }
         .login-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; }
-        .login-box h2 { color: var(--primary-color); margin-bottom: 5px; }
         .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
         .start-btn { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; }
         
@@ -91,6 +58,8 @@
         .header { position: fixed; top: 0; left: 0; right: 0; background-color: var(--primary-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; }
         .timer { font-size: 1.5rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 5px; }
         .student-info-bar { background: #e0e7ff; padding: 10px 20px; font-weight: bold; color: #3730a3; text-align: center; border-bottom: 2px solid #c7d2fe; }
+        
+        /* Giao diện Đề thi */
         .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
         .section-title { background: var(--card-bg); padding: 15px 20px; border-left: 5px solid var(--primary-color); border-radius: 5px; margin-top: 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .question-card { background: var(--card-bg); padding: 20px; border-radius: 8px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -101,8 +70,11 @@
         .correct-choice { background-color: #dcfce7 !important; border-color: var(--success-color) !important; font-weight: bold; color: var(--success-color); }
         .wrong-choice { background-color: #fee2e2 !important; border-color: var(--danger-color) !important; color: var(--danger-color); text-decoration: line-through; }
         .missed-choice { border-color: var(--success-color) !important; border-width: 2px !important; font-weight: bold; color: var(--success-color); }
-        .short-answer { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 1rem; box-sizing: border-box; }
+        
         .tf-grid { display: grid; grid-template-columns: 3fr 1fr 1fr; gap: 10px; margin-top: 10px; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
+        .short-answer { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 1rem; box-sizing: border-box; }
+        
+        .explanation { margin-top: 15px; padding: 10px; background: #fffbeb; border-left: 4px solid #f59e0b; font-size: 0.95rem; color: #1e40af; display: none; }
         
         .submit-btn { display: block; width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 15px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; margin: 40px 0; cursor: pointer; }
         .submit-btn:disabled { background-color: #94a3b8; cursor: not-allowed; }
@@ -112,163 +84,97 @@
         .analysis-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .analysis-table th, .analysis-table td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
         .ai-advice { background-color: #eff6ff; border-left: 5px solid var(--primary-color); padding: 20px; border-radius: 5px; margin-top: 20px; font-style: italic; }
-        .explanation { margin-top: 15px; padding: 10px; background: #fffbeb; border-left: 4px solid #f59e0b; font-size: 0.95rem; color: #1e40af; display: none; }
-        .back-btn { background: #e2e8f0; color: #333; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
+
     </style>
 </head>
 <body>
 
-    <!-- MÀN HÌNH CHỌN CỔNG CHÍNH -->
+    <!-- 1. CHỌN CỔNG -->
     <div id="portal-selection">
         <div class="portal-box">
-            <h1>HỆ THỐNG QUẢN LÝ THI</h1>
+            <h1 style="color: #3730a3; margin-bottom: 30px;">HỆ THỐNG QUẢN LÝ THI</h1>
             <button class="btn-portal btn-student" onclick="showScreen('start-screen')">👨‍🎓 DÀNH CHO HỌC SINH</button>
             <button class="btn-portal btn-teacher" onclick="showScreen('teacher-login')">👨‍🏫 DÀNH CHO GIÁO VIÊN</button>
         </div>
     </div>
 
-    <!-- KHU VỰC GIÁO VIÊN: ĐĂNG NHẬP -->
+    <!-- 2. KHU VỰC GIÁO VIÊN: ĐĂNG NHẬP -->
     <div id="teacher-login">
         <button class="back-btn" onclick="showScreen('portal-selection')">← Quay lại</button>
         <div class="login-form">
-            <h2 class="teacher-header">Xác thực Giáo viên</h2>
-            <p>Vui lòng nhập mật khẩu quản trị:</p>
-            <input type="password" id="teacher-pwd" placeholder="Nhập mật khẩu...">
-            <button class="btn-action" onclick="verifyTeacher()">Đăng Nhập</button>
-            <p id="pwd-error" style="color: red; display: none; font-size: 0.9rem;">Sai mật khẩu!</p>
+            <h2 style="color: var(--teacher-color);">Xác thực Giáo viên</h2>
+            <input type="password" id="teacher-pwd" placeholder="Nhập mật khẩu (081199)...">
+            <button class="btn-action" style="width:100%;" onclick="verifyTeacher()">Đăng Nhập</button>
+            <p id="pwd-error" style="color: red; display: none; margin-top:10px;">Sai mật khẩu!</p>
         </div>
     </div>
 
-    <!-- KHU VỰC GIÁO VIÊN: DASHBOARD TẠO ĐỀ -->
+    <!-- 3. KHU VỰC GIÁO VIÊN: DASHBOARD -->
     <div id="teacher-dashboard">
         <button class="back-btn" onclick="showScreen('portal-selection')">← Đăng xuất</button>
-        <h2 class="teacher-header">Công Cụ AI Tạo Đề Từ PDF</h2>
         
-        <div class="upload-card">
-            <h3>Tải lên file PDF chứa nội dung bài giảng</h3>
-            <p style="color: #64748b; font-size: 0.9rem;">(Tính năng mô phỏng: Web tĩnh không thể tự cấu hình API Key an toàn. Khuyên dùng các ứng dụng chuyên nghiệp để đọc PDF).</p>
-            <input type="file" id="pdf-upload" class="file-input" accept=".pdf">
-            <br>
-            <button class="btn-action" onclick="mockAIGeneration()">Dùng AI Phân Tích & Tạo Đề</button>
+        <div class="teacher-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-quanly')">📊 Quản Lý Điểm</button>
+            <button class="tab-btn" onclick="switchTab('tab-taode')">⚙️ Tạo Đề (JSON)</button>
+        </div>
+
+        <!-- Tab 1: Quản lý điểm -->
+        <div id="tab-quanly" class="tab-content active">
+            <h3 style="color: var(--teacher-color);">Thống kê kết quả</h3>
+            <p>Dữ liệu bên dưới là dữ liệu mô phỏng. Để xem dữ liệu thật của học sinh theo thời gian thực, vui lòng truy cập Google Sheets.</p>
+            <!-- LƯU Ý: Dán Link Google Sheets của bạn vào href bên dưới -->
+            <a href="https://docs.google.com/spreadsheets/d/..." target="_blank" style="display:inline-block; background:#16a34a; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold;">Mở Google Sheets (Dữ liệu thật)</a>
             
-            <div id="ai-loader">
-                <span class="loader-spinner"></span> AI đang đọc và trích xuất câu hỏi từ PDF...
-            </div>
-            
-            <div id="mock-result" class="mock-result">
-                <b>🤖 Thông báo hệ thống:</b> Quá trình tạo đề đã hoàn tất (Mô phỏng).<br><br>
-                <i>Trong thực tế, bạn sẽ cần một máy chủ (Backend) sử dụng API của Google Gemini để đọc file này, sau đó bóc tách các công thức Toán học, sinh ra các câu hỏi dạng JSON rồi lưu vào cơ sở dữ liệu.</i>
-            </div>
+            <table class="score-table">
+                <tr><th>Họ Tên</th><th>Lớp</th><th>Điểm</th><th>Số câu sai</th><th>Lần thi</th><th>Thời gian nộp</th></tr>
+                <tr><td>Nguyễn Văn A</td><td>11A1</td><td>8.5</td><td>2 câu (Xác suất)</td><td>1</td><td>Hôm nay, 10:15</td></tr>
+                <tr><td>Trần Thị B</td><td>11A2</td><td>10.0</td><td>Không sai</td><td>1</td><td>Hôm nay, 10:30</td></tr>
+                <tr><td>Lê Hoàng C</td><td>11A1</td><td>4.2</td><td>7 câu (Hình học)</td><td>2</td><td>Hôm nay, 11:00</td></tr>
+            </table>
+        </div>
+
+        <!-- Tab 2: Tạo đề JSON -->
+        <div id="tab-taode" class="tab-content">
+            <h3 style="color: var(--teacher-color);">Công cụ cấu hình đề thi</h3>
+            <p style="color: #d97706; background: #fef3c7; padding: 10px; border-left: 4px solid #f59e0b;">
+                <b>Lưu ý:</b> Việc dán mã JSON ở đây giúp bạn <b>Xem trước (Preview)</b> giao diện đề. Để lưu đề chính thức cho học sinh, bạn cần dán mã JSON này vào biến <code>DE_THI_MAC_DINH</code> trong file code trên GitHub.
+            </p>
+            <textarea id="json-input"></textarea>
+            <button class="btn-action" onclick="previewExamFromJSON()">👀 Tạo & Xem Trước Đề Thi</button>
         </div>
     </div>
 
-    <!-- KHU VỰC HỌC SINH: BẮT ĐẦU -->
+    <!-- 4. KHU VỰC HỌC SINH: ĐĂNG NHẬP -->
     <div id="start-screen">
         <button class="back-btn" onclick="showScreen('portal-selection')" style="position:absolute; top:20px; left:20px;">← Về trang chủ</button>
         <div class="login-box">
-            <h2>ĐỀ ÔN TẬP SỐ 1</h2>
-            <p>Thời gian làm bài: 90 phút</p>
+            <h2 id="home-exam-title">ĐỀ THI TOÁN</h2>
+            <p>Thời gian làm bài: <span id="home-exam-time"></span> phút</p>
             <input type="text" id="input-name" placeholder="Nhập Họ và Tên của bạn">
             <input type="text" id="input-class" placeholder="Nhập Lớp">
             <button class="start-btn" onclick="startExam()">BẮT ĐẦU VÀO THI</button>
         </div>
     </div>
 
-    <!-- KHU VỰC HỌC SINH: LÀM BÀI (Code đề thi số 1 giữ nguyên như cũ) -->
+    <!-- 5. KHU VỰC HỌC SINH: LÀM BÀI -->
     <div id="exam-screen">
         <div class="header">
-            <h2>Toán Học - Đề Số 1</h2>
-            <div class="timer" id="timer">90:00</div>
+            <h2 id="header-exam-title">Đề Thi</h2>
+            <div class="timer" id="timer">00:00</div>
         </div>
-        
-        <div class="student-info-bar">
-            Học sinh: <span id="display-name"></span> | Lớp: <span id="display-class"></span>
-        </div>
+        <div class="student-info-bar">Học sinh: <span id="display-name"></span> | Lớp: <span id="display-class"></span></div>
 
         <div class="container">
-            <!-- PHẦN 1 -->
-            <h3 class="section-title">Phần 1: Trắc nghiệm nhiều phương án lựa chọn</h3>
-            
-            <div class="question-card" id="card_p1_q1">
-                <p><b>Câu 1:</b> Hàm số nào sau đây có tập xác định là \((0; +\infty)\)?</p>
-                <div class="options">
-                    <label id="lbl_p1_q1_A"><input type="radio" name="p1_q1" value="A"> A. \(y = x^{\frac{1}{3}}\)</label>
-                    <label id="lbl_p1_q1_B"><input type="radio" name="p1_q1" value="B"> B. \(y = \log_5 x\)</label>
-                    <label id="lbl_p1_q1_C"><input type="radio" name="p1_q1" value="C"> C. \(y = \left(\frac{1}{2}\right)^x\)</label>
-                    <label id="lbl_p1_q1_D"><input type="radio" name="p1_q1" value="D"> D. \(y = e^x\)</label>
-                </div>
-                <div class="explanation" id="exp_p1_q1"><b>Giải thích:</b> Đáp án đúng: B. Hàm số logarit \(y = \log_a x\) có điều kiện biểu thức trong logarit lớn hơn 0 (\(x > 0\)).</div>
-            </div>
-
-            <div class="question-card" id="card_p1_q2">
-                <p><b>Câu 2:</b> Nghiệm của phương trình \(3^{2x-1} = 27\) là</p>
-                <div class="options">
-                    <label id="lbl_p1_q2_A"><input type="radio" name="p1_q2" value="A"> A. \(x = 1\)</label>
-                    <label id="lbl_p1_q2_B"><input type="radio" name="p1_q2" value="B"> B. \(x = 2\)</label>
-                    <label id="lbl_p1_q2_C"><input type="radio" name="p1_q2" value="C"> C. \(x = 3\)</label>
-                    <label id="lbl_p1_q2_D"><input type="radio" name="p1_q2" value="D"> D. \(x = 4\)</label>
-                </div>
-                <div class="explanation" id="exp_p1_q2"><b>Giải thích:</b> Đáp án đúng: B. Ta có \(3^{2x-1} = 3^3 \Leftrightarrow 2x-1 = 3 \Leftrightarrow x=2\).</div>
-            </div>
-
-            <div class="question-card" id="card_p1_q3">
-                <p><b>Câu 3:</b> Đạo hàm của hàm số \(y = 2\sin x + 3\cos x\) là</p>
-                <div class="options">
-                    <label id="lbl_p1_q3_A"><input type="radio" name="p1_q3" value="A"> A. \(y' = 2\cos x + 3\sin x\)</label>
-                    <label id="lbl_p1_q3_B"><input type="radio" name="p1_q3" value="B"> B. \(y' = -2\cos x - 3\sin x\)</label>
-                    <label id="lbl_p1_q3_C"><input type="radio" name="p1_q3" value="C"> C. \(y' = 2\cos x - 3\sin x\)</label>
-                    <label id="lbl_p1_q3_D"><input type="radio" name="p1_q3" value="D"> D. \(y' = -2\cos x + 3\sin x\)</label>
-                </div>
-                <div class="explanation" id="exp_p1_q3"><b>Giải thích:</b> Đáp án đúng: C. Áp dụng công thức \((\sin x)' = \cos x\) và \((\cos x)' = -\sin x\).</div>
-            </div>
-
-            <div class="question-card" id="card_p1_q4">
-                <p><b>Câu 4:</b> Số nghiệm nguyên của bất phương trình \(2^{x^2 - 3x} \le 16\) là</p>
-                <div class="options">
-                    <label id="lbl_p1_q4_A"><input type="radio" name="p1_q4" value="A"> A. 4</label>
-                    <label id="lbl_p1_q4_B"><input type="radio" name="p1_q4" value="B"> B. 5</label>
-                    <label id="lbl_p1_q4_C"><input type="radio" name="p1_q4" value="C"> C. 6</label>
-                    <label id="lbl_p1_q4_D"><input type="radio" name="p1_q4" value="D"> D. 7</label>
-                </div>
-                <div class="explanation" id="exp_p1_q4"><b>Giải thích:</b> Đáp án đúng: C. \(2^{x^2 - 3x} \le 2^4 \Leftrightarrow x^2 - 3x - 4 \le 0 \Leftrightarrow -1 \le x \le 4\). Các nghiệm nguyên: \(-1, 0, 1, 2, 3, 4\) (có 6 nghiệm).</div>
-            </div>
-
-            <!-- PHẦN 2 -->
-            <h3 class="section-title">Phần 2: Trắc nghiệm đúng sai</h3>
-            
-            <div class="question-card">
-                <p><b>Câu 1:</b> Cho hàm số \(f(x) = \log_5(x^2 - 4x + 4)\) và \(g(x) = 2^x\).</p>
-                <div class="tf-grid">
-                    <div>a) Tập xác định của hàm số \(f(x)\) là \(D = \mathbb{R} \setminus \{2\}\).</div>
-                    <label id="lbl_p2_q1a_T"><input type="radio" name="p2_q1a" value="T"> Đ</label>
-                    <label id="lbl_p2_q1a_F"><input type="radio" name="p2_q1a" value="F"> S</label>
-                </div>
-                <div class="tf-grid">
-                    <div>b) Đạo hàm của \(f(x)\) là \(f'(x) = \frac{2x - 4}{(x^2 - 4x + 4)\ln 5}\).</div>
-                    <label id="lbl_p2_q1b_T"><input type="radio" name="p2_q1b" value="T"> Đ</label>
-                    <label id="lbl_p2_q1b_F"><input type="radio" name="p2_q1b" value="F"> S</label>
-                </div>
-                <div class="explanation" id="exp_p2_q1">
-                    <b>Giải thích chi tiết:</b> a-Đ, b-Đ.
-                </div>
-            </div>
-
-            <!-- PHẦN 3 -->
-            <h3 class="section-title">Phần 3: Trả lời ngắn</h3>
-            <div class="question-card">
-                <p><b>Câu 1:</b> Một vật chuyển động thẳng có phương trình \(s(t) = -\frac{1}{3}t^3 + 4t^2 + 10t\). Tính vận tốc lớn nhất mà vật đạt được?</p>
-                <input type="text" class="short-answer" id="p3_q1" placeholder="Nhập đáp án của bạn (chỉ nhập số)...">
-                <div class="explanation" id="exp_p3_q1"><b>Giải thích:</b> Đáp án: <b>26</b>.</div>
-            </div>
+            <!-- NỘI DUNG ĐỀ THI ĐƯỢC TẠO TỰ ĐỘNG VÀO ĐÂY BẰNG JAVASCRIPT -->
+            <div id="exam-content-area"></div>
 
             <button class="submit-btn" id="submitBtn" onclick="submitExam()">NỘP BÀI</button>
 
             <!-- KHU VỰC KẾT QUẢ -->
             <div id="results-section">
                 <h2 style="text-align:center;">KẾT QUẢ BÀI LÀM</h2>
-                <div class="student-result-info">Học sinh: <span id="res-name"></span> | Lớp: <span id="res-class"></span></div>
-                <div class="score-display" id="final-score">Điểm: 0/12</div>
-                
+                <div style="text-align:center; color:#475569; margin-bottom:20px;">Học sinh: <span id="res-name"></span> | Lớp: <span id="res-class"></span></div>
+                <div class="score-display" id="final-score">Điểm: 0</div>
                 <h3>Bảng Phân Tích Điểm Yếu</h3>
                 <table class="analysis-table">
                     <thead><tr><th>Chủ đề kiến thức</th><th>Số câu sai</th><th>Đánh giá</th></tr></thead>
@@ -280,74 +186,197 @@
     </div>
 
     <script>
-        // --- LOGIC ĐIỀU HƯỚNG MÀN HÌNH ---
+        // ==========================================
+        // DỮ LIỆU ĐỀ THI MẶC ĐỊNH (JSON)
+        // GIÁO VIÊN THAY ĐỔI ĐOẠN NÀY ĐỂ ĐỔI ĐỀ CHÍNH THỨC
+        // ==========================================
+        const DE_THI_MAC_DINH = {
+            "title": "Đề Ôn Tập Số 1",
+            "time": 90,
+            "part1": [
+                {
+                    "id": "p1_q1",
+                    "text": "Hàm số nào sau đây có tập xác định là \\((0; +\\infty)\\)?",
+                    "options": { "A": "\\(y = x^{\\frac{1}{3}}\\)", "B": "\\(y = \\log_5 x\\)", "C": "\\(y = \\left(\\frac{1}{2}\\right)^x\\)", "D": "\\(y = e^x\\)" },
+                    "correct": "B",
+                    "tag": "Hàm số mũ & logarit",
+                    "exp": "Hàm số logarit \\(y = \\log_a x\\) có điều kiện \\(x > 0\\)."
+                },
+                {
+                    "id": "p1_q2",
+                    "text": "Nghiệm của phương trình \\(3^{2x-1} = 27\\) là",
+                    "options": { "A": "\\(x = 1\\)", "B": "\\(x = 2\\)", "C": "\\(x = 3\\)", "D": "\\(x = 4\\)" },
+                    "correct": "B",
+                    "tag": "Phương trình mũ",
+                    "exp": "\\(3^{2x-1} = 3^3 \\Leftrightarrow 2x-1 = 3 \\Leftrightarrow x=2\\)."
+                }
+            ],
+            "part2": [
+                {
+                    "id": "p2_q1",
+                    "text": "Cho hàm số \\(f(x) = \\log_5(x^2 - 4x + 4)\\) và \\(g(x) = 2^x\\).",
+                    "statements": {
+                        "a": "Tập xác định của hàm số \\(f(x)\\) là \\(D = \\mathbb{R} \\setminus \\{2\\}\\).",
+                        "b": "Hàm số \\(g(x)\\) nghịch biến trên \\(\\mathbb{R}\\)."
+                    },
+                    "correct": { "a": "T", "b": "F" },
+                    "tag": "Hàm số & Đạo hàm",
+                    "exp": "a Đúng vì \\((x-2)^2 > 0\\). b Sai vì cơ số 2 > 1 nên luôn đồng biến."
+                }
+            ],
+            "part3": [
+                {
+                    "id": "p3_q1",
+                    "text": "Một vật chuyển động có pt \\(s(t) = -\\frac{1}{3}t^3 + 4t^2 + 10t\\). Vận tốc lớn nhất đạt được là bao nhiêu?",
+                    "correct": "26",
+                    "tag": "Ứng dụng đạo hàm",
+                    "exp": "v(t) = s'(t) = -t^2 + 8t + 10. Max tại t = 4, v(4) = 26."
+                }
+            ]
+        };
+
+        // --- BIẾN TOÀN CỤC ---
+        let correctAnswers = {};
+        let questionTags = {};
+        let currentExamTime = 90;
+        let isSubmitted = false;
+        let timeRemaining = 0;
+        let countdown;
+        let studentName = "";
+        let studentClass = "";
+
+        // --- ĐIỀU HƯỚNG MÀN HÌNH ---
         function showScreen(screenId) {
-            document.getElementById('portal-selection').style.display = 'none';
-            document.getElementById('teacher-login').style.display = 'none';
-            document.getElementById('teacher-dashboard').style.display = 'none';
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('exam-screen').style.display = 'none';
-            
+            ['portal-selection', 'teacher-login', 'teacher-dashboard', 'start-screen', 'exam-screen'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
             document.getElementById(screenId).style.display = (screenId === 'portal-selection' || screenId === 'start-screen') ? 'flex' : 'block';
-            
-            // Reset lỗi sai pass nếu có
             if(screenId === 'teacher-login') document.getElementById('pwd-error').style.display = 'none';
         }
 
         // --- LOGIC CỔNG GIÁO VIÊN ---
         function verifyTeacher() {
-            const pwd = document.getElementById('teacher-pwd').value;
-            // CẢNH BÁO: Mật khẩu này ai biết ấn F12 cũng xem được. Chỉ dùng cho mục đích demo giao diện!
-            if (pwd === '081199') {
+            if (document.getElementById('teacher-pwd').value === '081199') {
                 showScreen('teacher-dashboard');
                 document.getElementById('teacher-pwd').value = '';
+                // Nạp sẵn JSON mặc định vào khung cho GV dễ sửa
+                document.getElementById('json-input').value = JSON.stringify(DE_THI_MAC_DINH, null, 4);
             } else {
                 document.getElementById('pwd-error').style.display = 'block';
             }
         }
 
-        function mockAIGeneration() {
-            const fileInput = document.getElementById('pdf-upload');
-            if(!fileInput.files[0]) {
-                alert("Vui lòng chọn một file PDF!");
-                return;
-            }
-            
-            document.getElementById('ai-loader').style.display = 'block';
-            document.getElementById('mock-result').style.display = 'none';
-            
-            // Giả lập thời gian AI xử lý
-            setTimeout(() => {
-                document.getElementById('ai-loader').style.display = 'none';
-                document.getElementById('mock-result').style.display = 'block';
-            }, 3000);
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
         }
 
+        function previewExamFromJSON() {
+            try {
+                const jsonText = document.getElementById('json-input').value;
+                const examData = JSON.parse(jsonText);
+                buildExamHTML(examData);
+                // Bỏ qua đăng nhập học sinh, vào thẳng exam screen để preview
+                studentName = "Giáo Viên (Preview)";
+                studentClass = "Admin";
+                document.getElementById('display-name').textContent = studentName;
+                document.getElementById('display-class').textContent = studentClass;
+                showScreen('exam-screen');
+            } catch (e) {
+                alert("Mã JSON không hợp lệ! Vui lòng kiểm tra lại dấu phẩy, ngoặc kép... Chi tiết lỗi: " + e.message);
+            }
+        }
 
-        // --- LOGIC CỔNG HỌC SINH (Giữ nguyên như cũ) ---
-        const correctAnswers = {
-            p1_q1: "B", p1_q2: "B", p1_q3: "C", p1_q4: "C",
-            p2_q1a: "T", p2_q1b: "T",
-            p3_q1: "26"
-        };
-        const questionTags = {
-            p1_q1: "Hàm số mũ & logarit", p1_q2: "Hàm số mũ & logarit", 
-            p1_q3: "Đạo hàm & Ứng dụng", p1_q4: "Hàm số mũ & logarit", 
-            p2_q1a: "Hàm số mũ & logarit", p2_q1b: "Đạo hàm & Ứng dụng", 
-            p3_q1: "Đạo hàm & Ứng dụng"
-        };
+        // --- LOGIC XÂY DỰNG ĐỀ TỪ JSON (RENDER ĐỘNG) ---
+        function buildExamHTML(examData) {
+            // Cập nhật thông tin cơ bản
+            document.getElementById('home-exam-title').textContent = examData.title;
+            document.getElementById('home-exam-time').textContent = examData.time;
+            document.getElementById('header-exam-title').textContent = examData.title;
+            currentExamTime = examData.time;
+            timeRemaining = currentExamTime * 60;
+            
+            // Reset đáp án
+            correctAnswers = {};
+            questionTags = {};
+            
+            let html = "";
+            let qIndex = 1;
 
-        let isSubmitted = false;
-        let timeRemaining = 90 * 60;
-        let countdown;
-        let studentName = "";
-        let studentClass = "";
+            // Xây dựng Phần 1
+            if (examData.part1 && examData.part1.length > 0) {
+                html += `<h3 class="section-title">Phần 1: Trắc nghiệm nhiều phương án lựa chọn</h3>`;
+                examData.part1.forEach(q => {
+                    html += `
+                    <div class="question-card" id="card_${q.id}">
+                        <p><b>Câu ${qIndex++}:</b> ${q.text}</p>
+                        <div class="options">`;
+                    for (let key in q.options) {
+                        html += `<label id="lbl_${q.id}_${key}"><input type="radio" name="${q.id}" value="${key}"> ${key}. ${q.options[key]}</label>`;
+                    }
+                    html += `</div>
+                        <div class="explanation" id="exp_${q.id}"><b>Giải thích:</b> ${q.exp}</div>
+                    </div>`;
+                    correctAnswers[q.id] = q.correct;
+                    questionTags[q.id] = q.tag;
+                });
+            }
 
+            // Xây dựng Phần 2
+            if (examData.part2 && examData.part2.length > 0) {
+                qIndex = 1;
+                html += `<h3 class="section-title">Phần 2: Trắc nghiệm đúng sai</h3>`;
+                examData.part2.forEach(q => {
+                    html += `
+                    <div class="question-card" id="card_${q.id}">
+                        <p><b>Câu ${qIndex++}:</b> ${q.text}</p>`;
+                    for (let key in q.statements) {
+                        let subId = q.id + key;
+                        html += `
+                        <div class="tf-grid">
+                            <div>${key}) ${q.statements[key]}</div>
+                            <label id="lbl_${subId}_T"><input type="radio" name="${subId}" value="T"> Đ</label>
+                            <label id="lbl_${subId}_F"><input type="radio" name="${subId}" value="F"> S</label>
+                        </div>`;
+                        correctAnswers[subId] = q.correct[key];
+                        questionTags[subId] = q.tag;
+                    }
+                    html += `<div class="explanation" id="exp_${q.id}"><b>Giải thích:</b> ${q.exp}</div>
+                    </div>`;
+                });
+            }
+
+            // Xây dựng Phần 3
+            if (examData.part3 && examData.part3.length > 0) {
+                qIndex = 1;
+                html += `<h3 class="section-title">Phần 3: Trả lời ngắn</h3>`;
+                examData.part3.forEach(q => {
+                    html += `
+                    <div class="question-card" id="card_${q.id}">
+                        <p><b>Câu ${qIndex++}:</b> ${q.text}</p>
+                        <input type="text" class="short-answer" id="${q.id}" placeholder="Nhập đáp án...">
+                        <div class="explanation" id="exp_${q.id}"><b>Giải thích:</b> ${q.exp}</div>
+                    </div>`;
+                    correctAnswers[q.id] = q.correct;
+                    questionTags[q.id] = q.tag;
+                });
+            }
+
+            document.getElementById('exam-content-area').innerHTML = html;
+            
+            // Yêu cầu MathJax render lại công thức Toán
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        // --- LOGIC HỌC SINH THI ---
         function startExam() {
             studentName = document.getElementById('input-name').value.trim();
             studentClass = document.getElementById('input-class').value.trim();
-
-            if(!studentName || !studentClass) { alert("Vui lòng điền đầy đủ Họ Tên và Lớp!"); return; }
+            if(!studentName || !studentClass) { alert("Vui lòng điền đủ Họ Tên và Lớp!"); return; }
 
             document.getElementById('display-name').textContent = studentName;
             document.getElementById('display-class').textContent = studentClass;
@@ -357,6 +386,11 @@
             showScreen('exam-screen');
 
             const timerElement = document.getElementById("timer");
+            isSubmitted = false;
+            document.getElementById("submitBtn").disabled = false;
+            document.getElementById("submitBtn").textContent = "NỘP BÀI";
+            document.getElementById("results-section").style.display = "none";
+
             countdown = setInterval(() => {
                 if (timeRemaining <= 0) { clearInterval(countdown); submitExam(true); return; }
                 timeRemaining--;
@@ -382,8 +416,8 @@
                 if (q.startsWith("p3_")) {
                     const el = document.getElementById(q);
                     userAnswer = el.value.trim().toLowerCase().replace(/\s/g, '');
-                    if (userAnswer === correctAnswers[q].toLowerCase()) { isCorrect = true; el.style.backgroundColor = "#dcfce7"; } 
-                    else { el.style.backgroundColor = "#fee2e2"; }
+                    if (userAnswer === correctAnswers[q].toLowerCase()) { isCorrect = true; el.style.backgroundColor = "#dcfce7"; el.value += " (Đ)"; } 
+                    else { el.style.backgroundColor = "#fee2e2"; el.value = el.value ? el.value + " (S)" : "Trống"; }
                 } else {
                     const selected = document.querySelector(`input[name="${q}"]:checked`);
                     const correctVal = correctAnswers[q];
@@ -401,17 +435,20 @@
             if(dsCauSai === "") dsCauSai = "Không sai";
             let diemHe10 = ((score / maxScore) * 10).toFixed(1);
 
-            btn.textContent = "ĐANG LƯU ĐIỂM VỀ HỆ THỐNG...";
-
-            const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyqxP-qIq-fp2Ux24Ou_lsCwgkJQkGzZJ99LVVM6g4FIT0c1gSz6u-OhkFKk1GRN5IxQ/exec";
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ hoTen: studentName, lop: studentClass, diem: diemHe10, soCauDung: `${score}/${maxScore}`, chiTietSai: dsCauSai })
-            })
-            .then(() => { btn.textContent = "ĐÃ LƯU KẾT QUẢ THÀNH CÔNG"; btn.style.backgroundColor = "var(--success-color)"; })
-            .catch(() => { btn.textContent = "LỖI LƯU ĐIỂM (XEM KẾT QUẢ BÊN DƯỚI)"; });
+            // Bỏ qua lưu điểm nếu đang ở chế độ Preview (Giáo viên Test)
+            if (studentClass === "Admin") {
+                btn.textContent = "CHẾ ĐỘ XEM TRƯỚC (KHÔNG LƯU ĐIỂM)";
+            } else {
+                btn.textContent = "ĐANG LƯU ĐIỂM VỀ HỆ THỐNG...";
+                // BẠN DÁN LINK APPS SCRIPT VÀO ĐÂY NHÉ
+                const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyqxP-qIq-fp2Ux24Ou_lsCwgkJQkGzZJ99LVVM6g4FIT0c1gSz6u-OhkFKk1GRN5IxQ/exec";
+                fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ hoTen: studentName, lop: studentClass, diem: diemHe10, soCauDung: `${score}/${maxScore}`, chiTietSai: dsCauSai })
+                }).then(() => { btn.textContent = "ĐÃ LƯU KẾT QUẢ THÀNH CÔNG"; btn.style.backgroundColor = "var(--success-color)"; })
+                  .catch(() => { btn.textContent = "LỖI LƯU ĐIỂM"; });
+            }
 
             document.querySelectorAll(".explanation").forEach(el => el.style.display = "block");
             displayResults(score, maxScore, weakAreas, diemHe10);
@@ -426,9 +463,14 @@
             if(!html) html = `<tr><td colspan="3" style="text-align:center; color:green;">Làm đúng 100%!</td></tr>`;
             document.getElementById("analysis-body").innerHTML = html;
             
-            document.getElementById("ai-advice-text").innerHTML = `<b>🤖 Lời khuyên từ AI:</b><br><br>Chào ${studentName}, em đạt ${diemHe10} điểm. Hãy tiếp tục cố gắng nhé!`;
+            document.getElementById("ai-advice-text").innerHTML = `<b>🤖 Lời khuyên từ AI:</b><br><br>Chào ${studentName}, em đạt ${score}/${maxScore} câu. Hãy kiểm tra lại phần giải thích bên trên nhé!`;
             setTimeout(() => document.getElementById("results-section").scrollIntoView({ behavior: "smooth" }), 500);
         }
+
+        // Tự động Load đề thi mặc định khi mở trang
+        window.onload = function() {
+            buildExamHTML(DE_THI_MAC_DINH);
+        };
     </script>
 </body>
 </html>
