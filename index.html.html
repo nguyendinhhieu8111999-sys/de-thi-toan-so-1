@@ -75,7 +75,7 @@
 
         /* --- CSS MÀN HÌNH THI --- */
         #exam-screen {
-            display: none; /* Ẩn đi lúc mới vào */
+            display: none; 
             padding-top: 70px;
         }
         .header {
@@ -463,22 +463,19 @@
                 return;
             }
 
-            // Gắn thông tin
             document.getElementById('display-name').textContent = studentName;
             document.getElementById('display-class').textContent = studentClass;
             document.getElementById('res-name').textContent = studentName;
             document.getElementById('res-class').textContent = studentClass;
 
-            // Chuyển màn hình
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('exam-screen').style.display = 'block';
 
-            // Khởi động đồng hồ
             const timerElement = document.getElementById("timer");
             countdown = setInterval(() => {
                 if (timeRemaining <= 0) {
                     clearInterval(countdown);
-                    submitExam(true); // Auto submit
+                    submitExam(true); 
                     return;
                 }
                 timeRemaining--;
@@ -487,7 +484,7 @@
                 timerElement.textContent = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
                 
                 if(timeRemaining < 300) {
-                    timerElement.style.backgroundColor = "rgba(220, 38, 38, 0.8)"; // Báo động đỏ < 5 phút
+                    timerElement.style.backgroundColor = "rgba(220, 38, 38, 0.8)"; 
                 }
             }, 1000);
         }
@@ -503,24 +500,22 @@
 
             isSubmitted = true;
             clearInterval(countdown);
-            document.getElementById("submitBtn").disabled = true;
-            document.getElementById("submitBtn").textContent = "ĐÃ NỘP BÀI";
+            const btn = document.getElementById("submitBtn");
+            btn.disabled = true;
+            btn.textContent = "ĐANG CHẤM ĐIỂM...";
 
             let score = 0;
             let maxScore = Object.keys(correctAnswers).length;
             let weakAreas = {};
 
-            // Khóa toàn bộ input
             const allInputs = document.querySelectorAll("input");
             allInputs.forEach(input => input.disabled = true);
 
-            // Chấm điểm
             for (let q in correctAnswers) {
                 let isCorrect = false;
                 let userAnswer = "";
 
                 if (q.startsWith("p3_")) {
-                    // Trả lời ngắn
                     const el = document.getElementById(q);
                     userAnswer = el.value.trim().toLowerCase().replace(/\s/g, '');
                     if (userAnswer === correctAnswers[q].toLowerCase()) {
@@ -534,11 +529,9 @@
                         el.value = el.value ? el.value + " (Sai)" : "Bỏ trống";
                     }
                 } else {
-                    // Trắc nghiệm và Đúng/Sai
                     const selected = document.querySelector(`input[name="${q}"]:checked`);
                     const correctVal = correctAnswers[q];
                     
-                    // Highlight đáp án đúng bất kể học sinh chọn gì
                     const correctLabel = document.getElementById(`lbl_${q}_${correctVal}`);
                     if(correctLabel) {
                         correctLabel.classList.add("missed-choice");
@@ -565,25 +558,55 @@
                 }
             }
 
-            // Hiển thị phần giải thích
+            // TỔNG HỢP DỮ LIỆU ĐỂ LƯU VỀ GOOGLE SHEETS
+            let dsCauSai = Object.keys(weakAreas).map(k => k + " (" + weakAreas[k] + " câu)").join(", ");
+            if(dsCauSai === "") dsCauSai = "Hoàn hảo (Không sai)";
+            
+            let diemHe10 = ((score / maxScore) * 10).toFixed(1);
+
+            let dataToSave = {
+                hoTen: studentName,
+                lop: studentClass,
+                diem: diemHe10,
+                soCauDung: `${score}/${maxScore}`,
+                chiTietSai: dsCauSai
+            };
+
+            btn.textContent = "ĐANG LƯU ĐIỂM VỀ HỆ THỐNG...";
+
+            // ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA BẠN ĐÃ ĐƯỢC CHÈN VÀO ĐÂY
+            const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyqxP-qIq-fp2Ux24Ou_lsCwgkJQkGzZJ99LVVM6g4FIT0c1gSz6u-OhkFKk1GRN5IxQ/exec";
+
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8", 
+                },
+                body: JSON.stringify(dataToSave)
+            })
+            .then(response => {
+                btn.textContent = "ĐÃ NỘP BÀI VÀ LƯU KẾT QUẢ THÀNH CÔNG";
+                btn.style.backgroundColor = "var(--success-color)";
+            })
+            .catch(error => {
+                console.error("Lỗi khi lưu điểm:", error);
+                btn.textContent = "ĐÃ NỘP BÀI (CÓ LỖI KHI LƯU ĐIỂM)";
+            });
+
             document.querySelectorAll(".explanation").forEach(el => el.style.display = "block");
 
-            // Hiển thị Bảng phân tích & AI
-            displayResults(score, maxScore, weakAreas);
+            displayResults(score, maxScore, weakAreas, diemHe10);
         }
 
-        function displayResults(score, maxScore, weakAreas) {
+        function displayResults(score, maxScore, weakAreas, diemHe10) {
             const resultSection = document.getElementById("results-section");
             const scoreDisplay = document.getElementById("final-score");
             const analysisBody = document.getElementById("analysis-body");
             const aiAdvice = document.getElementById("ai-advice-text");
 
             resultSection.style.display = "block";
-            // Tính điểm hệ 10 (Ví dụ: 12 câu -> lấy (số câu / 12) * 10)
-            let diemHe10 = ((score / maxScore) * 10).toFixed(1);
             scoreDisplay.textContent = `Số câu đúng: ${score}/${maxScore} - Điểm: ${diemHe10}`;
 
-            // Tạo bảng phân tích
             analysisBody.innerHTML = "";
             let mostWeakTopic = "";
             let maxErrors = 0;
@@ -607,7 +630,6 @@
                 analysisBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:green; font-weight:bold;">Tuyệt vời! Em đã làm đúng tất cả các câu hỏi.</td></tr>`;
             }
 
-            // Sinh lời khuyên AI
             let percentage = (score / maxScore) * 100;
             let adviceHTML = `<b>🤖 Lời khuyên từ thầy/cô AI dành cho ${studentName}:</b><br><br>`;
 
@@ -625,7 +647,6 @@
 
             aiAdvice.innerHTML = adviceHTML;
 
-            // Tự động cuộn xuống xem kết quả
             setTimeout(() => {
                 resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 500);
